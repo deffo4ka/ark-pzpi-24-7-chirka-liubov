@@ -1,0 +1,118 @@
+Міністерство освіти і науки України
+Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+Кафедра програмної інженерії
+
+ЗВІТ
+до практичного завдання № 2
+з дисципліни «Аналіз та рефакторинг коду»
+на тему: «Методи рефакторингу коду програмного забезпечення»
+
+Виконала:
+ст. гр. ПЗПІ-24-7
+Чірка Любов
+
+Перевірив:
+ст. викладач кафедри ПІ
+Сокорчук Ігор Петрович
+
+Харків – 2026
+
+1 ІСТОРІЯ ЗМІН
+№ | Дата       | Версія | Опис змін та виправлень
+1 | 06.11.2026 | 0.1    | Створено розділ «Завдання»
+2 | 06.11.2026 | 0.2    | Створено розділ «Опис виконаної роботи»
+3 | 06.11.2026 | 1.0    | Додано висновки, посилання на відео та додатки, звіт завершено
+
+2 ЗАВДАННЯ
+Підготувати і оформити у вигляді презентації доповідь на тему: "Методи рефакторингу коду програмного забезпечення". Обрати 3 методи рефакторингу з книги Мартіна Фаулера «Refactoring: Improving the Design of Existing Code». Навести код без рефакторингу та із застосуванням методу на прикладі особистого коду. Записати відеозвіт, завантажити його на YouTube та створити текстовий звіт згідно з ДСТУ 3008:2015.
+
+3 ОПИС ВИКОНАНОЇ РОБОТИ
+Під час виконання практичного завдання було досліджено 3 методи рефакторингу за Мартіном Фаулером. Мовою реалізації обрано TypeScript.
+
+Розглянуті методи:
+1. Rename Method (Перейменування методу): Зміна неінформативної назви функції "calc" на "calculateTicketPrice" для кращого розкриття наміру та бізнес-логіки.
+2. Replace Magic Number with Symbolic Constant (Заміна магічних чисел символьними константами): Заміна «магічних» числових літералів (18, 80, 100) на іменовані константи (AGE_OF_MAJORITY, DISCOUNTED_PRICE_UAH, STANDARD_PRICE_UAH) для централізованого управління конфігурацією.
+3. Decompose Conditional (Декомпозиція умовного виразу): Виділення перевантаженої перевірки пільг в окремий метод-предикат "isEligibleForDiscount", що спростило основний потік виконання.
+
+Для демонстрації було створено модуль розрахунку вартості квитків "TicketCalculator". Було проаналізовано проблеми оригінального коду та продемонстровано покращену версію, яка є самодокументованою, стійкою до розширення та готовою до модульного тестування (Unit-тестів).
+
+4 ВИСНОВКИ
+У результаті виконання роботи було практично застосовано 3 класичні методи рефакторингу. Отримано навички покращення читабельності, гнучкості та підтримки програмного коду. Доведено, що застосування методів Фаулера знижує когнітивне навантаження розробника, спрощує Code Review та робить код готовим до подальшого розвитку.
+
+5 ВИКОРИСТАНІ ДЖЕРЕЛА
+1. Martin Fowler. Refactoring: Improving the Design of Existing Code. 2nd ed. Addison-Wesley Professional, 2018. 448 p. https://martinfowler.com/books/refactoring.html
+2. Robert C. Martin. Clean Code: A Handbook of Agile Software Craftsmanship. Prentice Hall, 2008. 464 p. https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884
+3. Refactoring.Guru. Catalog of Refactoring Patterns. URL: https://refactoring.guru/refactoring/techniques
+4. TypeScript Documentation. Code Quality and Best Practices. URL: https://www.typescriptlang.org/docs/
+
+ДОДАТОК А
+Відеозапис
+
+Відеозапис доповіді: https://youtu.be/Vl_sgsI1cNk?si=i7lYPl7dWDDuExBD
+
+Хронологічний опис відеозапису:
+00:00 – Вступ та тема презентації
+00:11 – Поняття та мета рефакторингу коду
+00:16 – Огляд обраних методів рефакторингу (за Фаулером)
+01:20 – Аналіз проблем вихідного коду (ДО рефакторингу)
+01:42 – Демонстрація та розбір поганої реалізації методу "calc"
+03:15 – Метод 1: Rename Method (назва розкриває намір)
+03:42 – Метод 2: Replace Magic Number with Symbolic Constant
+04:03 – Метод 3: Decompose Conditional (умова як предикат)
+04:21 – Демонстрація коду ПІСЛЯ рефакторингу в IDE
+05:38 – Технічна вигода: зменшення ризиків та спрощення Code Review
+06:15 – Інструменти автоматизації рефакторингу (Prettier, ESLint, Unit-тести)
+07:06 – Підсумки роботи та висновки
+
+ДОДАТОК Б
+Слайди презентації
+
+{Скриншоти }
+ДОДАТОК В
+Програмний код
+
+В.1 Приклад програмного коду до рефакторингу
+GitHub репозиторій: https://github.com/deffo4ka/ark-pzpi-24-7-chirka-liubov/blob/main/Pract2/code-examples-refactoring-methods.ts
+
+namespace Before {
+  export class TicketCalculator {
+    // 1. Rename Method: The name 'calc' is not descriptive
+    // 2. Replace Magic Numbers: The numbers 18, 80, and 100 are used without explanation
+    // 3. Break Down the Conditional: A complex conditional expression on a single line
+    public calc(age: number, isStudent: boolean): number {
+      if (age < 18 || isStudent) {
+        return 80;
+      }
+      return 100;
+    }
+  }
+}
+
+В.2 Приклад програмного коду після рефакторингу
+GitHub репозиторій: https://github.com/deffo4ka/ark-pzpi-24-7-chirka-liubov/blob/main/Pract2/code-examples-refactoring-methods.ts
+
+namespace After {
+  // Method 2: Replace the Magic Number with a Symbolic Constant
+  const AGE_OF_MAJORITY = 18;
+  const DISCOUNTED_PRICE_UAH = 80;
+  const STANDARD_PRICE_UAH = 100;
+
+  export class TicketCalculator {
+    // Method 1: Rename Method (calc -> calculateTicketPrice)
+    public calculateTicketPrice(age: number, isStudent: boolean): number {
+      // Method 3: Decompose Conditional (extracting a complex condition into a predicate method)
+      if (this.isEligibleForDiscount(age, isStudent)) {
+        return DISCOUNTED_PRICE_UAH;
+      }
+      return STANDARD_PRICE_UAH;
+    }
+
+    // Helper method for checking eligibility for a discount
+    private isEligibleForDiscount(age: number, isStudent: boolean): boolean {
+      return age < AGE_OF_MAJORITY || isStudent;
+    }
+  }
+}
+
+{Кінець звіту}
